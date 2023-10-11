@@ -4,7 +4,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   disabled?: boolean;
   onClick: () => void;
-  children: JSX.Element;
   label: string;
 }
 

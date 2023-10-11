@@ -41,7 +41,7 @@ function CreatePostTextarea({
         outline-none
         resize-none
       `}
-    ></textarea>
+    />
   );
 }
 
