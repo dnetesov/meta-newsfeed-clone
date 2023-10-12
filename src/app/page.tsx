@@ -57,7 +57,7 @@ const dummyPost = {
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 p-12">
-      Newsfeed page
+      <div className="mb-4"></div>
       <Post post={dummyPost} interactions={dummyInteractions} />
     </main>
   );

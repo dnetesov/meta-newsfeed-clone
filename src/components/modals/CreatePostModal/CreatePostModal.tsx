@@ -6,6 +6,7 @@ import { LiaGlobeSolid } from "react-icons/lia";
 import Modal from "../../common/Modal/Modal";
 import Avatar from "../../Avatar";
 import CreatePostTextarea from "./CreatePostTextarea";
+import CreatePostAddMedia from "./CreatePostAddMedia";
 
 function CreatePostModal() {
   const [modalDisabled, setModalDisabled] = useState(true);
@@ -27,6 +28,7 @@ function CreatePostModal() {
 
       <div>
         <CreatePostTextarea setModalDisabled={setModalDisabled} userName="Test User" />
+        <CreatePostAddMedia />
       </div>
     </div>
   );

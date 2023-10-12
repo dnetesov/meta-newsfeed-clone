@@ -1,5 +1,4 @@
 import React from "react";
-import { IoMdClose } from "react-icons/io";
 import RoundIconButton from "../RoundIconButton";
 import { AiOutlineClose } from "react-icons/ai";
 
