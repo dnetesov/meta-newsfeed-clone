@@ -6,6 +6,7 @@ import {
 import { auth } from "@/config/firebase";
 
 // FIXME: type
+// @ts-ignore
 export function _onAuthStateChanged(cb) {
   return onAuthStateChanged(auth, cb);
 }
