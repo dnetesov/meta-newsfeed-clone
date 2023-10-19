@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 
 import { db } from "@/config/firebase";
+import { docsToArray } from "@/helpers/firestore";
 
 export async function GET() {
   // const q = query(
@@ -22,7 +23,9 @@ export async function GET() {
     const querySnapshot = await getDocs(collection(db, "test"));
     const docs = querySnapshot.docs;
 
-    return NextResponse.json({ docs }, {status: 200});
+    const result = docsToArray(docs);
+
+    return NextResponse.json({ result }, { status: 200 });
   } catch (error) {
     return NextResponse.json(error);
   }
