@@ -44,7 +44,7 @@ function Modal({
       onClose();
       // 300ms for animations
     }, 300);
-  }, [disabled, onClose]);
+  }, [onClose]);
 
   if (!isOpen) {
     return null;

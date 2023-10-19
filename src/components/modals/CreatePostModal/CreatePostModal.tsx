@@ -10,8 +10,9 @@ import CreatePostAddMedia from "./CreatePostAddMedia";
 
 function CreatePostModal() {
   const [modalDisabled, setModalDisabled] = useState(true);
+  const [text, setText] = useState("");
 
-  // const handle
+  const handleSubmit = () => {};
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -27,7 +28,10 @@ function CreatePostModal() {
       </div>
 
       <div>
-        <CreatePostTextarea setModalDisabled={setModalDisabled} userName="Test User" />
+        <CreatePostTextarea
+          setModalDisabled={setModalDisabled}
+          userName="Test User"
+        />
         <CreatePostAddMedia />
       </div>
     </div>
@@ -43,7 +47,7 @@ function CreatePostModal() {
       isOpen={createPostModal.isOpen}
       onClose={createPostModal.onClose}
       actionLabel="Post"
-      onSubmit={() => {}}
+      onSubmit={handleSubmit}
     />
   );
 }
