@@ -2,6 +2,7 @@ import { FieldValue } from "firebase/firestore";
 
 // Main export
 export interface Post {
+  id?: string;
   author: Author;
   post: PostData;
   comments?: Comment[];

@@ -1,6 +1,14 @@
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/config/firebase';
-import { Post } from '@/types/postTypes';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp,
+} from "firebase/firestore";
+import { db } from "@/config/firebase";
+import { Post } from "@/types/postTypes";
 
 // Create a new post
 export const createPost = async (postData: Post) => {
@@ -8,24 +16,24 @@ export const createPost = async (postData: Post) => {
     ...postData,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
-  }
+  };
 
-  const postsCollection = collection(db, 'posts');
+  const postsCollection = collection(db, "posts");
   const newPostDocRef = await addDoc(postsCollection, postToCreate);
   return newPostDocRef.id; // Return the new post ID
 };
 
-export const getPost =async (id: string) => {
+export const getPost = async (id: string) => {
   // TODO: implement
-}
+};
 
 // Retrieve all posts
-export const getPosts = async () => {
-  const postsCollection = collection(db, 'posts');
+export const getPosts = async (): Promise<Post[]> => {
+  const postsCollection = collection(db, "posts");
   const querySnapshot = await getDocs(postsCollection);
   return querySnapshot.docs.map((doc) => ({
     id: doc.id,
-    ...doc.data(),
+    ...(doc.data() as Post),
   }));
 };
 
@@ -37,6 +45,6 @@ export const getPosts = async () => {
 
 // Delete a post by ID
 export const deletePost = async (postId: string) => {
-  const postRef = doc(db, 'posts', postId);
+  const postRef = doc(db, "posts", postId);
   await deleteDoc(postRef);
 };
