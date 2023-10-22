@@ -1,25 +1,27 @@
 import { NextResponse } from "next/server";
 import {
-  addDoc,
   getDocs,
   collection,
   limit,
   orderBy,
   query,
-  where,
 } from "firebase/firestore";
+import { signInWithCustomToken } from "firebase/auth";
+import { generateCustomToken } from "../_services/adminService";
 
-import { db } from "@/config/firebase";
+import { db, auth } from "@/config/firebase";
 import { docsToArray } from "@/helpers/firestore";
+import { createPost } from "../_services/postService";
+import { Post } from "@/types/postTypes";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get("id");
+  // const { searchParams } = new URL(request.url);
+  // const id = searchParams.get("id");
 
   const q = query(collection(db, "posts"), orderBy("date"), limit(20));
 
   try {
-    const querySnapshot = await getDocs(collection(db, "posts"));
+    const querySnapshot = await getDocs(q);
     const docs = querySnapshot.docs;
 
     const result = docsToArray(docs);
@@ -31,16 +33,21 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { newPost } = await request.json();
+  const newPost: Post = await request.json();
 
-  // TODO: read about best practices
+  // TODO: Middleware / separate function?
+  const customToken = await generateCustomToken(newPost.author.userId);
+  await signInWithCustomToken(auth, customToken);
+
+  if (!newPost.author || !newPost.post.content) {
+    return NextResponse.json({ message: "Bad Request" }, { status: 400 });
+  }
 
   try {
-    // TODO: Create collection if not exist?
-    const response = await addDoc(collection(db, "posts"), newPost);
+    const postId = await createPost(newPost);
 
-    return NextResponse.json({}, { status: 201 });
+    return NextResponse.json({ postId }, { status: 201 });
   } catch (error) {
-    return NextResponse.json(error);
+    return NextResponse.json(error, { status: 500 });
   }
 }
