@@ -4,11 +4,13 @@ import { FaRegComment } from 'react-icons/fa';
 import { PiShareFatBold } from 'react-icons/pi';
 
 interface PostInteractionsProps {
+  likesCount: number;
   commentsCount: number;
   sharesCount: number;
 }
 
 function PostInteractions({
+  likesCount,
   commentsCount,
   sharesCount,
 }: PostInteractionsProps) {
@@ -26,7 +28,7 @@ function PostInteractions({
           <span className="flex gap-2 items-center">
             {/* TODO: fetch likes details on hover */}
             <BiLike size={16} className="text-blue-600" />{" "}
-            <span className="text-sm text-neutral-400">12</span>{" "}
+            <span className="text-sm text-neutral-400">{likesCount}</span>{" "}
           </span>
         </div>
         <span className=" text-sm text-neutral-400 cursor-pointer hover:underline">

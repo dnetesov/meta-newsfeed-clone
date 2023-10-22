@@ -3,14 +3,15 @@ import { BsThreeDots } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import Avatar from "../../Avatar";
 import Tooltip from "@/components/common/Tooltip";
+import { Timestamp } from "firebase/firestore";
 
 interface PostHeaderProps {
   avatarSrc: string;
   authorName: string;
-  time: string;
+  time: Timestamp;
 }
 
-const parseTimestamp = (timestamp: string) => {
+const parseTimestamp = (timestamp: Date) => {
   const timeAgo = moment(timestamp).fromNow();
   const formattedDate = moment(timestamp).format("dddd, D MMMM YYYY, HH:mm");
 
@@ -21,7 +22,7 @@ const parseTimestamp = (timestamp: string) => {
 };
 
 function PostHeader({ avatarSrc, authorName, time }: PostHeaderProps) {
-  const { timeAgo, formattedDate } = parseTimestamp(time);
+  const { timeAgo, formattedDate } = parseTimestamp(time.toDate());
 
   return (
     <header
@@ -32,7 +33,7 @@ function PostHeader({ avatarSrc, authorName, time }: PostHeaderProps) {
         py-3
       "
     >
-      <Avatar size={40} src="/images/avatar_placeholder.png" />
+      <Avatar size={40} src={avatarSrc} />
 
       <div className="flex flex-col flex-grow">
         <span className="self-start cursor-pointer hover:underline">{authorName}</span>

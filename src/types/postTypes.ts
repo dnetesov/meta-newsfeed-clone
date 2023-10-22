@@ -1,8 +1,12 @@
+import { FieldValue } from "firebase/firestore";
+
 // Main export
 export interface Post {
   author: Author;
   post: PostData;
   comments?: Comment[];
+  createdAt?: FieldValue;
+  updatedAt?: FieldValue;
 }
 
 export interface PostInteractions {
@@ -14,9 +18,9 @@ export interface PostInteractions {
 type MediaType = "image" | "video";
 
 interface Author {
-  id: string;
-  fullName: string;
-  profilePictureUrl: string;
+  userId: string;
+  fullName: string | null;
+  profilePictureUrl: string | null;
 }
 
 export interface MediaItem {
@@ -26,8 +30,6 @@ export interface MediaItem {
 }
 
 export interface PostData {
-  id: string; //Unique identifier for the post.
-  timestamp: string; //When the post was created.
   content: string; //Text content of the post.
   media?: MediaItem[]; //An array containing information about images, videos, or other media.
   isLiked: boolean; //A boolean indicating if the current user has liked the post.
@@ -37,8 +39,8 @@ export interface PostData {
 }
 
 export interface Comment {
-  id: string; //Comment's identifier.
   author: Author; //Comment author's information.
   content: string; //Text content of the comment.
-  timestamp: string; //When the comment was poste
+  createdAt: string; //When the comment was poste
+  updatedAt: string;
 }

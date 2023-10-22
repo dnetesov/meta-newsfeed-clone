@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
 interface CreatePostTextareaProps {
-  userName: string;
+  userName?: string | null;
   setModalDisabled: (disabled: boolean) => void;
+  value: string;
+  setValue: (newValue: string) => void;
 }
 
 const XL_TEXT_CHAR_LIMIT = 84;
@@ -10,9 +12,10 @@ const XL_TEXT_CHAR_LIMIT = 84;
 function CreatePostTextarea({
   userName,
   setModalDisabled,
+  value,
+  setValue
 }: CreatePostTextareaProps) {
   const [applyXlTextSize, setApplyXlTextSize] = useState(true);
-  const [value, setValue] = useState("");
 
   useEffect(() => {
     setModalDisabled(value.length === 0);
@@ -32,7 +35,7 @@ function CreatePostTextarea({
     <textarea
       value={value}
       onChange={handleChange}
-      placeholder={`What's on your mind, ${userName}`}
+      placeholder={`What's on your mind${userName ? `, ${userName}` : "?"}`}
       className={`
         ${applyXlTextSize ? "text-xl" : "text-sm"}
         w-full

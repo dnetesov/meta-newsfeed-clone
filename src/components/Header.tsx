@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { BsFacebook } from "react-icons/bs";
 import { IoAddSharp } from "react-icons/io5";
 import { RiLoginBoxLine, RiLogoutBoxRFill } from "react-icons/ri";
@@ -10,9 +11,15 @@ import useLoginModal from "@/hooks/useLoginModal";
 import Avatar from "./Avatar";
 
 function Header() {
+  const router = useRouter();
   const createPostModal = useCreatePostModal();
   const loginModal = useLoginModal();
   const user = useSession();
+
+  const handleSignout = async () => {
+    await signOut();
+    router.refresh();
+  }
 
   return (
     <header
@@ -46,12 +53,14 @@ function Header() {
             </button>
             <button
               title="Logout"
-              onClick={signOut}
+              onClick={handleSignout}
               className="bg-neutral-700 p-2 rounded-full cursor-pointer hover:bg-neutral-600 transition-transform duration-200 transform scale-100 hover:scale-105"
             >
               <RiLogoutBoxRFill size={24} />
             </button>
-            <Avatar src={user.photoURL} size={40} />
+            <button title={user.displayName || ''}>
+              <Avatar src={user.photoURL} size={40} />
+            </button>
           </>
         ) : (
           <button
